@@ -340,11 +340,64 @@ Thus the reformulation of problem b is:
 
 
 \section{Problem 5: Reformulations}
-Given  \( f_i \in \realnumbers, x_i \in \realnumbers and w_i \in \mathbb{R} \) for \( i = 1,...m \) formulate the following minimization problem:\\
-\begin{equation*}
-    \min_{a_0,a_1,...,a_n} \sum_{i=1}^{m} w_i \mid f_i -  (a_0 + a_1 x_i + ... + a_nx_i^n \mid
-\end{equation*}
-as a (mixed integer) \textit{linear programming} problem. (Hint: the coefficients \( w_i (i = 1,...,m) \) could be positive or negative).
-
-\subsubsection{Solution}
+    Given  \( f_i \in \mathbb{R}, x_i \in \mathbb{R}s and w_i \in \mathbb{R} \) for \( i = 1,...m \) formulate the following minimization problem:\\
+    \begin{equation*}
+        \min_{a_0,a_1,...,a_n} \sum_{i=1}^{m} w_i \mid f_i -  (a_0 + a_1 x_i + ... + a_nx_i^n \mid
+    \end{equation*}
+    as a (mixed integer) \textit{linear programming} problem. (Hint: the coefficients \( w_i (i = 1,...,m) \) could be positive or negative).
+    
+    \subsubsection{Solution}
+    We will introduce a new decision variable:\\
+    \( u_i (i=1,...,m) \)\\
+    \( u_i = \mid f_i - (a_0 + a_ix_i + ...+ a_nx_i^n) \mid \)\\
+    We then define the introduced variable as the following:\\
+    \begin{equation*}
+        u_i = 
+        \begin{cases}
+            &u_i^+ = f_i - (a_0 + a_ix_i + ...+ a_nx_i^n)\\
+            &u_i^- = -[f_i - (a_0 + a_ix_i + ...+ a_nx_i^n)]\\
+        \end{cases}
+    \end{equation*}\\
+    We then address the scalar \( w_i \)\\ by defining the scalar as either both positive or negative for \( i=1,...,m) \)//
+        \begin{equation*}
+            w_i = 
+            \begin{cases}
+                &w_i^+ = \text{positive scalar}\\
+                &w_i^- = \text{negative scalar}\\
+            \end{cases}
+        \end{equation*}\\
+    Let us take the sample space and encapsulate it within I as follows:\\
+    \( i=1,...,M \in I\)\\ 
+    \( \Longleftrightarrow \)\\
+    \( I^+ = i: w_i \geq 0\)\\
+    \( I^- = i: w_i < 0 \)\\
+    We then reformulate the objective function:\\
+    \begin{equation*}
+        \min \sum_{i \in I^+} w_i u_i + \sum_{i \in I^-} w_iu_i
+    \end{equation*}
+    Relaxing the decision variable we have the following to minimize the objective function:\\
+    \begin{equation*}
+        u_i = 
+        \begin{cases}
+            &i \in I^+ : u_i^+ \geq f_i - (a_0 + a_ix_i + ...+ a_nx_i^n)\\
+            &i \in I^- : u_i^- \geq -[f_i - (a_0 + a_ix_i + ...+ a_nx_i^n)]\\
+        \end{cases}
+    \end{equation*}\\
+    We define a binary variable \( d_i \in\) {0,1}\\
+    The constraints are defined as the following:\\ 
+    \begin{equation*}
+        -Md_i - u_i^- \leq u_i \leq u_i^+ + M(1-d_i)
+    \end{equation*}
+    
+    We then have the formulation:\\ 
+    \begin{align*}
+        &\min \sum_{i \in I^+} w_i u_i + \sum_{i \in I^-} w_i u_i\\
+        \text{Subject to:}\\
+        &-Md_i - u_i^- \leq u_i \leq u_i^+ + M(1-d_i)\\
+        &f_i \in \mathbb{R}\\
+        &x_i \in \mathbb{R}\\
+        &w_i \in \mathbb{R}\\
+        &\text{for } i = 1,...,m\\
+    \end{align*}\\
+    [Note* = Where M is vert large number as M approaches \(\infnty\)]\\
 \end{document}
