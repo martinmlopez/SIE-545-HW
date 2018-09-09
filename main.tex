@@ -179,43 +179,168 @@ A household with budget \textit{b} purchases \textit{n} commodities. The unit pr
 
 \subsection{BSS 1.7 (A): Sum of squares of the error is minimized}
 \subsubsection{Problem Data}
-
+\begin{equation*}
+    \begin{split}
+        &b_j= \text{Budget to purchase }n \text{commodities for} j=1,..,n-1\\
+        &c_j=\text{Unit price of commodity for} j=1,...,n-1\\
+        &\ell_j= \text{Number of commodities to be purchased for } j=1,...,n-1\\
+        &a_j= \text{Fraction of remaining budget allocated to purchase commodity for } j=1,...,n-1
+    \end{split}
+\end{equation*}
 \subsubsection{Decision Variables}
+\( \varepsilon_j \) determines the sum of squares of the error:
+    \begin{align*}    
+        &\varepsilon_j = [b_j-(c_j + a_j)]^2\\
+    \end{align*}
 
 \subsubsection{Objective Function}
+\begin{equation*}
+    \min \sum_{i=1}^{m} \sum_{j=1}^{n-1} \varepsilon_j^2
+\end{equation*}
 
 \subsubsection{Constraints}
-
+    \begin{align*}
+        &\ell_j, a_j \in \mathbb{R}\\
+    \end{align*}
+\subparagraph{Regression Model}
+    \begin{align*}
+        &\min \sum_{i=1}^{m} \sum_{j=1}^{n-1} \varepsilon_j^2\\
+        &\text{s.t.}\\
+        &\ell_j, a_j \in \mathbb{R} \\
+    \end{align*}
+    
 \subsection{BSS 1.7 (B): Max absolute value of error is minimized}
 \subsubsection{Problem Data}
-
+\begin{equation*}
+    \begin{split}
+        &b_j= \text{Budget to purchase }n \text{commodities for} j=1,..,n-1\\
+        &c_j=\text{Unit price of commodity for} j=1,...,n-1\\
+        &\ell_j= \text{Number of commodities to be purchased for } j=1,...,n-1\\
+        &a_j= \text{Fraction of remaining budget allocated to purchase commodity for } j=1,...,n-1
+    \end{split}
+\end{equation*}
 \subsubsection{Decision Variables}
+    \( \mid \varepsilon_j  \mid \) determines the absolute value error:
+    \begin{align*}    
+        &\mid \varepsilon_j \mid= \mid [b_j-(c_j + a_j)]\mid\\
+    \end{align*}
 
 \subsubsection{Objective Function}
+\begin{equation*}
+    \min_{\ell_j,a_j} \quad \max_{i=1,...,m} \sum_{j=1}^{n-1} \mid \varepsilon_j \mid
+\end{equation*}
 
 \subsubsection{Constraints}
-
+    \begin{align*}
+        &\ell_j, a_j \in \mathbb{R}\\
+    \end{align*}
+\subparagraph{Regression Model}
+    \begin{align*}
+        &\min_{\ell_j,a_j} \quad \max_{i=1,...,m} \sum_{j=1}^{n-1} \mid \varepsilon_j \mid\\
+        &\text{s.t.}\\
+        &\ell_j, a_j \in \mathbb{R} \\
+    \end{align*}
+  
 \subsection{BSS 1.7 (C): Sum of absolute values of errors minimized}
 \subsubsection{Problem Data}
-
+\begin{equation*}
+    \begin{split}
+        &b_j= \text{Budget to purchase }n \text{commodities for} j=1,..,n-1\\
+        &c_j=\text{Unit price of commodity for} j=1,...,n-1\\
+        &\ell_j= \text{Number of commodities to be purchased for } j=1,...,n-1\\
+        &a_j= \text{Fraction of remaining budget allocated to purchase commodity for } j=1,...,n-1
+    \end{split}
+\end{equation*}
 \subsubsection{Decision Variables}
+\( \mid \varepsilon_j  \mid \) determines the absolute value error:
+    \begin{align*}    
+        &\mid \varepsilon_j \mid= \mid [b_j-(c_j + a_j)]\mid\\
+    \end{align*}
 
 \subsubsection{Objective Function}
+\begin{equation*}
+    \min \sum_{i=1}^{m}\sum_{j=1}^{n-1} \mid \varepsilon_j \mid
+\end{equation*}
 
 \subsubsection{Constraints}
+    \begin{align*}
+        &\ell_j, a_j \in \mathbb{R}\\
+    \end{align*}
+\subparagraph{Regression Model}
+    \begin{align*}
+        &\min \sum_{i=1}^{m}\sum_{j=1}^{n-1} \mid \varepsilon_j \mid
+        &\text{s.t.}\\
+        &\ell_j, a_j \in \mathbb{R} \\
+    \end{align*}
 
 \subsection{BSS 1.7 (D): Reformulations of b and c}
-\subsubsection{Problem Data}
+\subsubsection{Reformulation of b}
+Reformulating the max absolute value of the error to be minimized: 
+    \begin{align*}
+            &\min_{\ell_j,a_j} \quad \max_{i=1,...,m} \sum_{j=1}^{n-1} \mid \varepsilon_j \mid\\
+            &\text{s.t.}\\
+            &\ell_j, a_j \in \mathbb{R} \\
+    \end{align*}\\
+Let's start be replacing the objective function by u and imposing a new constraint:\\
+    \begin{equation*}
+        u = \min_{\ell_j,a_j} \max_{i=1,...,m} \sum_{j=1}^{n-1} \mid \varepsilon_j \mid\\
+    \end{equation*}\\
+The constraint u is equivalent to:\\
+    \begin{equation*}
+        u \geq \max_{i=1,...,m} \mid [b_j-(c_j + a_j)]\mid\\
+        \Longleftrightarrow\\
+        u \geq \mid [b_j-(c_j + a_j)]\mid\\
+    \end{equation*}\\
 
-\subsubsection{Decision Variables}
+The constrain then can be relaxed:\\
+   \begin{equation*}
+        \begin{cases}
+            &u \geq b_j - c_j - a_j  , j = 1,...,n-1\\
+            &u \geq -b_j + c_j + a_j), j = 1,...,n-1\\
+        \end{cases}\\
+    \end{equation*}\\
+Thus the reformulation of problem b is: 
+    \begin{align*}
+        &\min_{\ell, a, u} \sum_{j=1}^{n-1} u_j\\
+        &\text{s.t.}\\
+        &u \geq b_j - c_j - a_j  , j = 1,...,n-1\\
+        &u \geq -b_j + c_j + a_j), j = 1,...,n-1\\
+    \end{align*}
 
-\subsubsection{Objective Function}
+\subsubsection{Reformulation of c}
+Reformulating the max absolute value of the error to be minimized: 
+    \begin{align*}
+            &\min \sum_{i=1}^{m}\sum_{j=1}^{n-1} \mid \varepsilon_j \mid\\
+            &\text{s.t.}\\
+            &\ell_j, a_j \in \mathbb{R} \\
+    \end{align*}\\
+Let's start be replacing the objective function by u and imposing a new constraint:\\
+    \begin{equation*}
+        u = \min \sum_{i=1}^{m}\sum_{j=1}^{n-1} \mid \varepsilon_j\\
+    \end{equation*}\\
+The constraint u is equivalent to:\\
+    \begin{equation*}
+        u \geq \mid [b_j-(c_j + a_j)]\mid\\
+    \end{equation*}\\
+The constrain then can be relaxed:\\
+   \begin{equation*}
+        \begin{cases}
+            &u \geq b_j - c_j - a_j  , j = 1,...,n-1\\
+            &u \geq -b_j + c_j + a_j), j = 1,...,n-1\\
+        \end{cases}\\
+    \end{equation*}\\
+Thus the reformulation of problem b is: 
+    \begin{align*}
+        &\min \sum_{j=1}^{n-1} u_j\\
+        &\text{s.t.}\\
+        &u \geq b_j - c_j - a_j  , j = 1,...,n-1\\
+        &u \geq -b_j + c_j + a_j), j = 1,...,n-1\\
+    \end{align*}
 
-\subsubsection{Constraints}
 
 
-\subsection{Reformulations}
-Given  \( f_i \in \realnumbers, x_i \in \realnumbers and w_i \in \realnumbers \) for \( i = 1,...m \) formulate the following minimization problem:\\
+\section{Problem 5: Reformulations}
+Given  \( f_i \in \realnumbers, x_i \in \realnumbers and w_i \in \mathbb{R} \) for \( i = 1,...m \) formulate the following minimization problem:\\
 \begin{equation*}
     \min_{a_0,a_1,...,a_n} \sum_{i=1}^{m} w_i \mid f_i -  (a_0 + a_1 x_i + ... + a_nx_i^n \mid
 \end{equation*}
